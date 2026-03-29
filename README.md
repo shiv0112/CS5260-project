@@ -81,29 +81,32 @@ project/
 
 ### Backend Setup
 
+**First time only:**
+
 ```bash
-# Navigate to backend
 cd backend
-
-# Create and activate a virtual environment
 python -m venv venv
-source venv/bin/activate        # macOS/Linux
-# venv\Scripts\activate         # Windows
-
-# Install dependencies
+source venv/bin/activate
 pip install -r requirements.txt
-
-# Set up environment variables
 cp .env.example .env
-# Edit .env and add your API keys:
-#   OPENAI_API_KEY=sk-...
-#   RUNWAY_API_KEY=...
+# Edit .env and add your API keys
+```
 
-# Run the server
-uvicorn app.main:app --reload --port 8000
+**Run the server:**
+
+```bash
+./backend/run.sh
 ```
 
 The backend will be running at `http://localhost:8000`. You can verify at `http://localhost:8000/health`.
+
+**Test transcript extraction:**
+
+```bash
+curl -X POST http://localhost:8000/api/test-transcript \
+  -H "Content-Type: application/json" \
+  -d '{"youtube_url": "https://www.youtube.com/watch?v=VIDEO_ID_HERE"}'
+```
 
 ### Frontend Setup
 

@@ -2,6 +2,7 @@ import uuid
 from fastapi import APIRouter, HTTPException
 
 from app.models import ProcessRequest, JobResponse, StatusResponse, ResultResponse
+from app.services.transcript import get_transcript, merge_chunks
 
 router = APIRouter()
 
@@ -38,6 +39,22 @@ async def get_result(job_id: str):
     if job["status"] != "complete":
         raise HTTPException(status_code=400, detail="Job not complete yet")
     return job["result"]
+
+
+@router.post("/test-transcript")
+async def test_transcript(request: ProcessRequest):
+    """Test endpoint — fetch and chunk a YouTube transcript."""
+    try:
+        raw_chunks = get_transcript(request.youtube_url)
+        merged = merge_chunks(raw_chunks)
+        return {
+            "raw_chunk_count": len(raw_chunks),
+            "merged_chunk_count": len(merged),
+            "sample_raw": raw_chunks[:3],
+            "sample_merged": merged[:2],
+        }
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 
 @router.post("/generate-third/{job_id}")
