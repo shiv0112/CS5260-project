@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.routes.api import router
+from app.routes import router
 
 app = FastAPI(title="YTSage", description="YouTube to Shorts Synthesis Agent")
 

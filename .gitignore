@@ -31,6 +31,11 @@ Thumbs.db
 *.cache
 .cache/
 
+# ChromaDB
+chroma_db/
+
 # Generated videos
 *.mp4
 *.webm
+
+CLAUDE.md

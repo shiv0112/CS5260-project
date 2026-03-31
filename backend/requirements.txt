@@ -1,8 +1,12 @@
 fastapi==0.115.6
 uvicorn==0.34.0
 pydantic-settings==2.7.1
-youtube-transcript-api==0.6.3
+youtube-transcript-api==1.2.4
 langgraph==0.2.60
 langchain-openai==0.3.0
 openai==1.58.1
 python-dotenv==1.0.1
+chromadb==0.5.23
+langchain-chroma==0.2.2
+langchain-text-splitters==0.3.4
+yt-dlp==2026.3.17

@@ -2,7 +2,7 @@ import hashlib
 import json
 import os
 
-from app.config import settings
+from app.core.config import settings
 
 
 def _get_cache_path(youtube_url: str, concept_title: str | None = None) -> str:
