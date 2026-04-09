@@ -14,19 +14,15 @@ class StatusResponse(BaseModel):
     progress: str
 
 
-class ClaimCitation(BaseModel):
-    claim: str
-    timestamp: int
-    url: str
-
-
 class ConceptResult(BaseModel):
     title: str
-    script: str
-    citations: list[ClaimCitation]
-    video_url: str | None = None
+    description: str = ""
+    start_time: float = 0
+    end_time: float = 0
+    infographic_urls: list[str] = []
 
 
 class ResultResponse(BaseModel):
+    youtube_url: str
     concepts: list[ConceptResult]
-    third_concept: ConceptResult | None = None
+    slideshow_url: str | None = None

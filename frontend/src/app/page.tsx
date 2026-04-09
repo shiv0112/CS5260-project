@@ -1,11 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 export default function Home() {
   const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -13,20 +17,20 @@ export default function Home() {
     setLoading(true);
 
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}/api/process`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ youtube_url: url }),
-        }
-      );
+      const res = await fetch(`${API_URL}/api/process`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ youtube_url: url }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Server error");
+      }
+
       const data = await res.json();
-      // TODO: redirect to /results/[job_id] page
-      console.log("Job created:", data.job_id);
+      router.push(`/processing/${data.job_id}`);
     } catch {
       setError("Failed to connect to the server. Please try again.");
-    } finally {
       setLoading(false);
     }
   };
@@ -38,8 +42,8 @@ export default function Home() {
           YT<span className="text-blue-500">Sage</span>
         </h1>
         <p className="text-lg text-zinc-400 max-w-md">
-          Turn any YouTube lecture into 2 AI-generated 30-second explainer
-          shorts — with timestamp citations back to the source.
+          Turn any YouTube lecture into AI-generated infographic summaries
+          — with key concepts extracted and visualized.
         </p>
 
         <form onSubmit={handleSubmit} className="w-full flex flex-col gap-4">
@@ -56,7 +60,7 @@ export default function Home() {
             disabled={loading}
             className="px-6 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-50 font-medium transition-colors"
           >
-            {loading ? "Processing..." : "Generate Shorts"}
+            {loading ? "Processing..." : "Generate Summary"}
           </button>
           {error && <p className="text-red-400 text-sm">{error}</p>}
         </form>

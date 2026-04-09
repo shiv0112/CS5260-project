@@ -8,6 +8,7 @@ class YTSageState(TypedDict):
     top_concepts: list[dict]        # {title, description, relevant_keywords, rank}
     scripts: list[dict]             # {concept_title, script_text, segments_used}
     citations: list[dict]           # {concept_title, claims: [{text, timestamp, url}]}
-    video_urls: list[dict]          # {concept_title, video_url}
+    video_urls: list[dict]          # {concept_title, infographic_urls}
+    slideshow_path: str             # local path to stitched MP4
     status: str                     # processing | complete | error
     error_message: str

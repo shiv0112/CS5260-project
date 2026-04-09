@@ -4,7 +4,6 @@ from app.models.pipeline import (
     ProcessRequest,
     JobResponse,
     StatusResponse,
-    ClaimCitation,
     ConceptResult,
     ResultResponse,
 )
@@ -27,7 +26,6 @@ __all__ = [
     "ProcessRequest",
     "JobResponse",
     "StatusResponse",
-    "ClaimCitation",
     "ConceptResult",
     "ResultResponse",
     "ChatRequest",
