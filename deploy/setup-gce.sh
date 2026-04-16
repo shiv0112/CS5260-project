@@ -11,7 +11,7 @@ echo "=== YTSage Backend Setup ==="
 
 # System packages
 sudo apt-get update
-sudo apt-get install -y python3.12 python3.12-venv python3-pip ffmpeg git nginx certbot python3-certbot-nginx
+sudo apt-get install -y python3 python3-venv python3-pip ffmpeg git nginx certbot python3-certbot-nginx
 
 # Clone repo (or you can scp/rsync)
 if [ ! -d "/opt/ytsage" ]; then
@@ -28,7 +28,7 @@ cd /opt/ytsage/backend
 
 # Python venv + deps
 echo "=== Setting up Python environment ==="
-python3.12 -m venv venv
+python3 -m venv venv
 source venv/bin/activate
 pip install --upgrade pip
 pip install -r requirements.txt
