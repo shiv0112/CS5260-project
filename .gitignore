@@ -40,6 +40,7 @@ chroma_db/
 
 CLAUDE.md
 
-chat*
+chat.db
+chat.db-*
 
 *.md
