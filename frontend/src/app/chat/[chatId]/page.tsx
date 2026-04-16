@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { useParams, useSearchParams } from "next/navigation";
 import Markdown from "react-markdown";
-import { apiFetch } from "@/lib/api";
+import { apiFetch, withApiKey } from "@/lib/api";
 
 const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
@@ -141,7 +141,7 @@ export default function ChatPage() {
       if (d.has_slideshow) {
         // Slideshow exists on disk
         setSsState("complete");
-        setSsUrl(`${API}${d.slideshow_url}`);
+        setSsUrl(withApiKey(`${API}${d.slideshow_url}`));
       } else if (d.pipeline_status === "processing") {
         // Pipeline is running - start polling
         setSsJob(d.pipeline_job_id);
@@ -173,7 +173,7 @@ export default function ChatPage() {
           sessionStorage.setItem(`slideshow_steps_${videoId}`, JSON.stringify(updated));
           return updated;
         });
-        if (d.status === "complete") { setSsState("complete"); setSsUrl(`${API}/api/slideshow/video/${videoId}`); clearInterval(iv); }
+        if (d.status === "complete") { setSsState("complete"); setSsUrl(withApiKey(`${API}/api/slideshow/video/${videoId}`)); clearInterval(iv); }
         else if (d.status === "error") { setSsState("error"); clearInterval(iv); }
       } catch {}
     }, 5000);

@@ -13,3 +13,13 @@ export function apiFetch(url: string, init?: RequestInit): Promise<Response> {
   }
   return fetch(url, { ...init, headers });
 }
+
+/**
+ * Append the API key as a query parameter for URLs that can't send custom headers
+ * (e.g. <video src>, <img src>, <iframe src>).
+ */
+export function withApiKey(url: string): string {
+  if (!API_KEY) return url;
+  const sep = url.includes("?") ? "&" : "?";
+  return `${url}${sep}api_key=${encodeURIComponent(API_KEY)}`;
+}

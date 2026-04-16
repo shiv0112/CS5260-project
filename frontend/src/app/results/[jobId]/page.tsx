@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
-import { apiFetch } from "@/lib/api";
+import { apiFetch, withApiKey } from "@/lib/api";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
@@ -121,7 +121,7 @@ export default function ResultsPage() {
               <video
                 controls
                 className="w-full max-h-[500px]"
-                src={`${API_URL}${result.slideshow_url}`}
+                src={withApiKey(`${API_URL}${result.slideshow_url}`)}
               >
                 Your browser does not support the video tag.
               </video>

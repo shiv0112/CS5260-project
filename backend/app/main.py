@@ -36,11 +36,14 @@ app.add_middleware(
 
 @app.middleware("http")
 async def api_key_check(request: Request, call_next):
-    """If API_KEY is set, require X-API-Key header on /api/* routes."""
+    """If API_KEY is set, require X-API-Key header OR ?api_key=... query param on /api/* routes."""
     if settings.api_key and request.url.path.startswith("/api/"):
         # Preflight OPTIONS requests skip auth (browsers don't send custom headers on them)
         if request.method != "OPTIONS":
-            client_key = request.headers.get("x-api-key", "")
+            client_key = (
+                request.headers.get("x-api-key", "")
+                or request.query_params.get("api_key", "")
+            )
             if client_key != settings.api_key:
                 return JSONResponse(
                     status_code=401,
